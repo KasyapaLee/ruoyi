@@ -1,7 +1,11 @@
-FROM java:8
+FROM openjdk:8-jdk-alpine
+MAINTAINER lgq0218@gmail.com
+COPY target/ruoyi-admin.jar  app.jar
 EXPOSE 8080
-
-VOLUME /tmp
-ADD ruoyi-admin.jar  /app.jar
-RUN bash -c 'touch /app.jar'
 ENTRYPOINT ["java","-jar","/app.jar"]
+
+
+#FROM openjdk:8-jdk-alpine
+#VOLUME /tmp
+#COPY target/*.jar app.jar
+#ENTRYPOINT ["java","-jar","/app.jar"]
