@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.crm.mapper.CustomerMapper">
+
+    <resultMap type="Customer" id="CustomerResult">
+        <result property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="phone" column="phone"/>
+        <result property="company" column="company"/>
+        <result property="position" column="position"/>
+        <result property="email" column="email"/>
+        <result property="applyTime" column="apply_time"/>
+        <result property="applyStatus" column="apply_status"/>
+        <result property="attention" column="attention"/>
+        <result property="source" column="source"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="selectCustomerVo">
+        select id,
+               username,
+               phone,
+               company,
+               position,
+               email,
+               apply_time,
+               apply_status,
+               attention,
+               source,
+               create_time,
+               update_time
+        from crm_customer
+    </sql>
+
+    <select id="selectCustomerList" parameterType="Customer" resultMap="CustomerResult">
+        <include refid="selectCustomerVo"/>
+        <where>
+            <if test="username != null  and username != ''">
+                and username like concat('%', #{username}, '%')
+            </if>
+            <if test="phone != null  and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="company != null  and company != ''">
+                and company = #{company}
+            </if>
+            <if test="position != null  and position != ''">
+                and position = #{position}
+            </if>
+            <if test="email != null  and email != ''">
+                and email = #{email}
+            </if>
+            <if test="applyTime != null ">
+                and apply_time = #{applyTime}
+            </if>
+            <if test="applyStatus != null ">
+                and apply_status = #{applyStatus}
+            </if>
+            <if test="attention != null  and attention != ''">
+                and attention = #{attention}
+            </if>
+            <if test="source != null  and source != ''">
+                and source = #{source}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCustomerById" parameterType="Long"
+            resultMap="CustomerResult">
+        <include refid="selectCustomerVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertCustomer" parameterType="Customer" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into crm_customer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">username,
+            </if>
+            <if test="phone != null">phone,
+            </if>
+            <if test="company != null">company,
+            </if>
+            <if test="position != null">position,
+            </if>
+            <if test="email != null">email,
+            </if>
+            <if test="applyTime != null">apply_time,
+            </if>
+            <if test="applyStatus != null">apply_status,
+            </if>
+            <if test="attention != null">attention,
+            </if>
+            <if test="source != null">source,
+            </if>
+            <if test="createTime != null">create_time,
+            </if>
+            <if test="updateTime != null">update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">#{username},
+            </if>
+            <if test="phone != null">#{phone},
+            </if>
+            <if test="company != null">#{company},
+            </if>
+            <if test="position != null">#{position},
+            </if>
+            <if test="email != null">#{email},
+            </if>
+            <if test="applyTime != null">#{applyTime},
+            </if>
+            <if test="applyStatus != null">#{applyStatus},
+            </if>
+            <if test="attention != null">#{attention},
+            </if>
+            <if test="source != null">#{source},
+            </if>
+            <if test="createTime != null">#{createTime},
+            </if>
+            <if test="updateTime != null">#{updateTime},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateCustomer" parameterType="Customer">
+        update crm_customer
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null">username =
+                #{username},
+            </if>
+            <if test="phone != null">phone =
+                #{phone},
+            </if>
+            <if test="company != null">company =
+                #{company},
+            </if>
+            <if test="position != null">position =
+                #{position},
+            </if>
+            <if test="email != null">email =
+                #{email},
+            </if>
+            <if test="applyTime != null">apply_time =
+                #{applyTime},
+            </if>
+            <if test="applyStatus != null">apply_status =
+                #{applyStatus},
+            </if>
+            <if test="attention != null">attention =
+                #{attention},
+            </if>
+            <if test="source != null">source =
+                #{source},
+            </if>
+            <if test="createTime != null">create_time =
+                #{createTime},
+            </if>
+            <if test="updateTime != null">update_time =
+                #{updateTime},
+            </if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteCustomerById" parameterType="Long">
+        delete
+        from crm_customer
+        where id = #{id}
+    </delete>
+
+    <delete id="deleteCustomerByIds" parameterType="String">
+        delete from crm_customer where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
