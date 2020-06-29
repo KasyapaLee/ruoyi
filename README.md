@@ -1,10 +1,15 @@
 # ruoyi
 
+## 变更项
 1. 添加 ruoyi-crm 模块。
 2. 排除 shiro 对 swagger 的拦截。
 3. 添加 客户信息的 CRUD 接口 API。
 4. 添加 lombok 依赖。
 5. 添加 Dockerfile 文件。
+
+## 遗留问题
+
+- [ ] 容器中启动后，登录页面无法获取的验证码图片
 
 
 ### ruoyi 是什么？
